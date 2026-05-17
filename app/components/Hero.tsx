@@ -34,18 +34,20 @@ export function Hero() {
         </div>
 
         <div className="relative z-10 w-full min-w-0 max-w-[22rem] sm:mx-auto sm:max-w-xl">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-[#f5dccd] shadow-[0_28px_80px_rgba(39,56,74,0.16)]">
-            <div className="absolute inset-4 rounded-[1.55rem] border border-white/60" />
-            <div className="absolute left-8 top-8 rounded-3xl bg-white/78 p-4 shadow-xl backdrop-blur">
-              <Image
-                src="/petis-logo.jpg"
-                alt="Ilustración de perro y gato de Petis"
-                width={176}
-                height={176}
-                className="rounded-2xl"
-              />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-[#f5dccd] shadow-[0_28px_80px_rgba(39,56,74,0.16)]">
+            <Image
+              src="/petis-hero-memory.webp"
+              alt="Persona organizando fotos y recuerdos de sus mascotas"
+              fill
+              priority
+              sizes="(max-width: 768px) 90vw, 44vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#183e5b]/50 via-transparent to-white/5" />
+            <div className="absolute left-5 top-5 rounded-full bg-white/86 px-4 py-2 text-xs font-semibold text-[#183e5b] shadow-lg backdrop-blur sm:left-8 sm:top-8">
+              Recuerdos hechos con cuidado
             </div>
-            <div className="absolute bottom-10 left-8 right-8 rounded-[1.35rem] bg-[#fffaf3]/92 p-6 shadow-2xl backdrop-blur">
+            <div className="absolute bottom-6 left-5 right-5 rounded-lg bg-[#fffaf3]/94 p-5 shadow-2xl backdrop-blur sm:bottom-8 sm:left-8 sm:right-8 sm:p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#ef5366]">
                 Recuerdo 01
               </p>
@@ -57,10 +59,10 @@ export function Hero() {
                 reconoces.
               </p>
             </div>
-            <div className="absolute right-8 top-16 rounded-2xl bg-[#ffc62a] px-4 py-3 text-sm font-bold text-[#183e5b] shadow-xl">
+            <div className="absolute right-5 top-20 rounded-full bg-[#ffc62a] px-4 py-3 text-sm font-bold text-[#183e5b] shadow-xl sm:right-8">
               12 momentos
             </div>
-            <div className="absolute bottom-36 right-8 rounded-full bg-[#56a7df] px-5 py-3 text-sm font-bold text-white shadow-xl">
+            <div className="absolute bottom-36 right-5 rounded-full bg-[#56a7df] px-5 py-3 text-sm font-bold text-white shadow-xl sm:right-8">
               Para siempre
             </div>
           </div>
