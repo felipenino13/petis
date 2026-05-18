@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PlatformAuthLayout } from "../components/PlatformAuthLayout";
+import { signIn } from "./actions";
 
 export const metadata: Metadata = {
   title: "Ingresar | Petis",
   description: "Accede a tu espacio Petis para crear y revisar calendarios de mascotas.",
 };
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams?: Promise<{
+    error?: string;
+    message?: string;
+  }>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const params = await searchParams;
+
   return (
     <PlatformAuthLayout
       eyebrow="Plataforma Petis"
@@ -26,7 +36,19 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <form className="mt-8 space-y-5">
+      {params?.error ? (
+        <p className="mt-6 rounded-lg border border-[#ef5366]/25 bg-[#ef5366]/10 px-4 py-3 text-sm font-medium text-[#9d2f3c]">
+          {params.error}
+        </p>
+      ) : null}
+
+      {params?.message ? (
+        <p className="mt-6 rounded-lg border border-[#25d366]/25 bg-[#25d366]/10 px-4 py-3 text-sm font-medium text-[#226044]">
+          {params.message}
+        </p>
+      ) : null}
+
+      <form action={signIn} className="mt-8 space-y-5">
         <label className="block">
           <span className="text-sm font-semibold text-[#27384a]">Correo electrónico</span>
           <input
@@ -65,12 +87,12 @@ export default function LoginPage() {
           </a>
         </div>
 
-        <Link
-          href="/dashboard"
-          className="flex w-full justify-center rounded-full bg-[#ef5366] px-6 py-4 text-base font-semibold text-white shadow-[0_18px_40px_rgba(239,83,102,0.22)] transition hover:bg-[#dc4358] focus:outline-none focus:ring-4 focus:ring-[#ef5366]/25"
+        <button
+          type="submit"
+          className="w-full rounded-full bg-[#ef5366] px-6 py-4 text-base font-semibold text-white shadow-[0_18px_40px_rgba(239,83,102,0.22)] transition hover:bg-[#dc4358] focus:outline-none focus:ring-4 focus:ring-[#ef5366]/25"
         >
           Entrar a mi espacio
-        </Link>
+        </button>
       </form>
 
       <p className="mt-8 text-center text-sm text-[#68707b]">

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
+import { createCalendar, signOut } from "./actions";
 
 const calendarSteps = [
   {
@@ -27,7 +31,43 @@ export const metadata: Metadata = {
   description: "Crea y organiza el calendario personalizado de tu mascota en Petis.",
 };
 
-export default function DashboardPage() {
+type DashboardPageProps = {
+  searchParams?: Promise<{
+    error?: string;
+    message?: string;
+  }>;
+};
+
+type CalendarDraft = {
+  id: string;
+  pet_name: string;
+  pet_type: string;
+  status: string | null;
+  created_at: string;
+};
+
+export default async function DashboardPage({ searchParams }: DashboardPageProps) {
+  const params = await searchParams;
+  const supabase = createClient(await cookies());
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login?error=Ingresa%20para%20acceder%20a%20tu%20espacio%20Petis.");
+  }
+
+  const { data: calendars } = await supabase
+    .from("calendars")
+    .select("id, pet_name, pet_type, status, created_at")
+    .order("created_at", { ascending: false })
+    .returns<CalendarDraft[]>();
+
+  const userName =
+    typeof user.user_metadata.full_name === "string" && user.user_metadata.full_name
+      ? user.user_metadata.full_name
+      : user.email;
+
   return (
     <main className="min-h-screen bg-[#fffaf3] text-[#27384a]">
       <header className="border-b border-[#ead9c8]/75 bg-white/86 backdrop-blur">
@@ -51,12 +91,14 @@ export default function DashboardPage() {
             >
               WhatsApp
             </a>
-            <Link
-              href="/login"
-              className="rounded-full bg-[#183e5b] px-4 py-2 text-white transition hover:bg-[#245476]"
-            >
-              Salir
-            </Link>
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="rounded-full bg-[#183e5b] px-4 py-2 text-white transition hover:bg-[#245476]"
+              >
+                Salir
+              </button>
+            </form>
           </nav>
         </div>
       </header>
@@ -70,7 +112,8 @@ export default function DashboardPage() {
             Calendario de escritorio
           </h1>
           <p className="mt-3 text-sm leading-6 text-[#68707b]">
-            Organiza el material para que Petis pueda crear un recuerdo sensible y bonito.
+            Hola, {userName}. Organiza el material para que Petis pueda crear un
+            recuerdo sensible y bonito.
           </p>
 
           <div className="mt-6 space-y-3">
@@ -89,6 +132,18 @@ export default function DashboardPage() {
         </aside>
 
         <section className="space-y-8">
+          {params?.error ? (
+            <p className="rounded-lg border border-[#ef5366]/25 bg-[#ef5366]/10 px-4 py-3 text-sm font-medium text-[#9d2f3c]">
+              {params.error}
+            </p>
+          ) : null}
+
+          {params?.message ? (
+            <p className="rounded-lg border border-[#25d366]/25 bg-[#25d366]/10 px-4 py-3 text-sm font-medium text-[#226044]">
+              {params.message}
+            </p>
+          ) : null}
+
           <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
             <section className="rounded-lg border border-[#ead9c8] bg-white p-6 shadow-[0_24px_70px_rgba(39,56,74,0.08)] sm:p-8">
               <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
@@ -108,7 +163,7 @@ export default function DashboardPage() {
                 </span>
               </div>
 
-              <form className="mt-8 grid gap-5">
+              <form action={createCalendar} encType="multipart/form-data" className="mt-8 grid gap-5">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <label className="block">
                     <span className="text-sm font-semibold text-[#27384a]">Nombre de la mascota</span>
@@ -116,6 +171,12 @@ export default function DashboardPage() {
                       type="text"
                       name="petName"
                       placeholder="Ej: Bruno"
+                      required
+                      defaultValue={
+                        typeof user.user_metadata.first_pet_name === "string"
+                          ? user.user_metadata.first_pet_name
+                          : ""
+                      }
                       className="mt-2 w-full rounded-lg border border-[#ead9c8] bg-[#fffaf3] px-4 py-3 text-base text-[#27384a] outline-none transition placeholder:text-[#9b8f86] focus:border-[#ef5366] focus:ring-4 focus:ring-[#ef5366]/12"
                     />
                   </label>
@@ -166,7 +227,7 @@ export default function DashboardPage() {
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <button
-                    type="button"
+                    type="submit"
                     className="rounded-full bg-[#ef5366] px-6 py-4 text-base font-semibold text-white shadow-[0_18px_40px_rgba(239,83,102,0.22)] transition hover:bg-[#dc4358] focus:outline-none focus:ring-4 focus:ring-[#ef5366]/25"
                   >
                     Guardar borrador
@@ -219,19 +280,37 @@ export default function DashboardPage() {
               </button>
             </div>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {monthIdeas.map((month) => (
-                <article key={month} className="rounded-lg border border-[#ead9c8] bg-[#fffaf3] p-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-[#183e5b]">{month}</h3>
-                    <span className="h-3 w-3 rounded-full bg-[#ffc62a]" />
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-[#68707b]">
-                    Sin foto asignada todavía. Elige una imagen y una frase breve para este espacio.
-                  </p>
-                </article>
-              ))}
-            </div>
+            {calendars && calendars.length > 0 ? (
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {calendars.map((calendar) => (
+                  <article key={calendar.id} className="rounded-lg border border-[#ead9c8] bg-[#fffaf3] p-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-[#183e5b]">{calendar.pet_name}</h3>
+                      <span className="rounded-full bg-[#ffc62a] px-3 py-1 text-xs font-bold text-[#183e5b]">
+                        {calendar.status === "draft" ? "Borrador" : calendar.status}
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-[#68707b]">
+                      {calendar.pet_type}. Continúa agregando fotos, fechas y notas para completar su calendario.
+                    </p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {monthIdeas.map((month) => (
+                  <article key={month} className="rounded-lg border border-[#ead9c8] bg-[#fffaf3] p-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-[#183e5b]">{month}</h3>
+                      <span className="h-3 w-3 rounded-full bg-[#ffc62a]" />
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-[#68707b]">
+                      Sin foto asignada todavía. Elige una imagen y una frase breve para este espacio.
+                    </p>
+                  </article>
+                ))}
+              </div>
+            )}
           </section>
         </section>
       </div>

@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PlatformAuthLayout } from "../components/PlatformAuthLayout";
+import { signUp } from "./actions";
 
 export const metadata: Metadata = {
   title: "Crear cuenta | Petis",
   description: "Crea tu cuenta Petis para empezar un calendario personalizado de tu mascota.",
 };
 
-export default function CreateAccountPage() {
+type CreateAccountPageProps = {
+  searchParams?: Promise<{
+    error?: string;
+  }>;
+};
+
+export default async function CreateAccountPage({ searchParams }: CreateAccountPageProps) {
+  const params = await searchParams;
+
   return (
     <PlatformAuthLayout
       eyebrow="Crea tu cuenta"
@@ -26,7 +35,13 @@ export default function CreateAccountPage() {
         </p>
       </div>
 
-      <form className="mt-8 space-y-5">
+      {params?.error ? (
+        <p className="mt-6 rounded-lg border border-[#ef5366]/25 bg-[#ef5366]/10 px-4 py-3 text-sm font-medium text-[#9d2f3c]">
+          {params.error}
+        </p>
+      ) : null}
+
+      <form action={signUp} className="mt-8 space-y-5">
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="block">
             <span className="text-sm font-semibold text-[#27384a]">Nombre</span>
@@ -87,12 +102,12 @@ export default function CreateAccountPage() {
           />
         </label>
 
-        <Link
-          href="/dashboard"
-          className="flex w-full justify-center rounded-full bg-[#ef5366] px-6 py-4 text-base font-semibold text-white shadow-[0_18px_40px_rgba(239,83,102,0.22)] transition hover:bg-[#dc4358] focus:outline-none focus:ring-4 focus:ring-[#ef5366]/25"
+        <button
+          type="submit"
+          className="w-full rounded-full bg-[#ef5366] px-6 py-4 text-base font-semibold text-white shadow-[0_18px_40px_rgba(239,83,102,0.22)] transition hover:bg-[#dc4358] focus:outline-none focus:ring-4 focus:ring-[#ef5366]/25"
         >
           Crear mi cuenta Petis
-        </Link>
+        </button>
       </form>
 
       <p className="mt-8 text-center text-sm text-[#68707b]">
