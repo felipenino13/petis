@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     siteName: "Petis",
     images: [
       {
-        url: "/petis-hero-memory.webp",
-        width: 1536,
-        height: 1024,
-        alt: "Recuerdos cálidos de mascotas con fotos, calendario y marco",
+        url: "/cover-facebook.webp",
+        width: 820,
+        height: 360,
+        alt: "Portada de Petis Club para recuerdos especiales de mascotas",
       },
     ],
     locale: "es_CO",
