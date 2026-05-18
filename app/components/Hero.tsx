@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -18,17 +19,17 @@ export function Hero() {
             calendario de escritorio hecho para recordar con ternura todo el año.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a
-              href="#contacto"
+            <Link
+              href="/crear-cuenta"
               className="w-full rounded-full bg-[#ef5366] px-7 py-4 text-center text-base font-semibold text-white shadow-[0_20px_40px_rgba(239,83,102,0.22)] transition hover:bg-[#dc4358] sm:w-auto"
             >
-              Quiero crear un recuerdo
-            </a>
+              Subir fotos de mi mascota
+            </Link>
             <a
-              href="https://www.instagram.com/petis.club/"
+              href="#contacto"
               className="w-full rounded-full border border-[#d8c3b2] bg-white/75 px-7 py-4 text-center text-base font-semibold text-[#183e5b] transition hover:border-[#183e5b]/35 hover:bg-white sm:w-auto"
             >
-              Ver Instagram
+              Hablar con Petis
             </a>
           </div>
         </div>

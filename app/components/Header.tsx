@@ -35,12 +35,12 @@ export function Header() {
             Ingresar
           </Link>
         </div>
-        <a
-          href="#contacto"
+        <Link
+          href="/crear-cuenta"
           className="hidden rounded-full bg-[#183e5b] px-5 py-3 text-sm font-semibold text-white shadow-[0_16px_35px_rgba(24,62,91,0.18)] transition hover:bg-[#245476] sm:inline-flex"
         >
-          Crear recuerdo
-        </a>
+          Subir fotos
+        </Link>
       </nav>
     </header>
   );
