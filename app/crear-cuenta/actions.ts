@@ -4,6 +4,10 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
+function getSiteUrl() {
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? "https://petis.club").replace(/\/$/, "");
+}
+
 function signUpErrorMessage(message?: string) {
   if (!message) {
     return "No pudimos crear tu cuenta. Inténtalo de nuevo.";
@@ -46,6 +50,7 @@ export async function signUp(formData: FormData) {
     email,
     password,
     options: {
+      emailRedirectTo: `${getSiteUrl()}/auth/callback?next=/dashboard`,
       data: {
         full_name: fullName,
         phone,
