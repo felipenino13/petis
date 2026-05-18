@@ -5,7 +5,10 @@ export function Footer() {
         <p className="font-semibold text-[#183e5b]">Petis</p>
         <p>Calendarios de escritorio para recordar con amor.</p>
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <a href="mailto:petis.club@gmail.com" className="hover:text-[#183e5b]">
+          <a
+            href="mailto:petis.club@gmail.com?subject=Quiero%20crear%20un%20calendario%20Petis"
+            className="hover:text-[#183e5b]"
+          >
             petis.club@gmail.com
           </a>
           <a

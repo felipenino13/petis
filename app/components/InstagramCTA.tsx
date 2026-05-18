@@ -9,8 +9,8 @@ export function InstagramCTA() {
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div className="relative aspect-square overflow-hidden rounded-lg bg-[#183e5b] shadow-[0_24px_70px_rgba(39,56,74,0.1)]">
           <Image
-            src="/logo-petis-100.webp"
-            alt="Logo de Petis"
+            src="/petis-story.webp"
+            alt="Perro y gato rodeados de recuerdos felices"
             fill
             sizes="(max-width: 1024px) 100vw, 36vw"
             className="object-cover"
