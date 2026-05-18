@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const navigation = [
   { label: "Qué es", href: "#que-es" },
@@ -11,7 +12,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#ead9c8]/70 bg-[#fffaf3]/90 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
-        <a href="#" className="flex items-center gap-3" aria-label="Ir al inicio">
+        <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
           <Image
             src="/petis-logo.jpg"
             alt="Petis"
@@ -23,13 +24,16 @@ export function Header() {
           <span className="text-lg font-semibold tracking-[0.08em] text-[#183e5b]">
             PETIS
           </span>
-        </a>
+        </Link>
         <div className="hidden items-center gap-7 text-sm font-medium text-[#5f6470] md:flex">
           {navigation.map((item) => (
             <a key={item.label} href={item.href} className="transition hover:text-[#183e5b]">
               {item.label}
             </a>
           ))}
+          <Link href="/login" className="transition hover:text-[#183e5b]">
+            Ingresar
+          </Link>
         </div>
         <a
           href="#contacto"
