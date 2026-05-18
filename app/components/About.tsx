@@ -12,9 +12,9 @@ export function About() {
         </div>
         <div className="rounded-lg border border-[#ead9c8] bg-[#fffaf3] p-7 shadow-[0_20px_55px_rgba(39,56,74,0.08)] sm:p-10">
           <p className="text-lg leading-8 text-[#5f6470]">
-            Petis convierte el amor por las mascotas en piezas visuales, físicas o
-            digitales: recuerdos pensados para celebrar su personalidad, sus días
-            favoritos y la manera en que acompañaron tu vida.
+            Petis convierte el amor por las mascotas en calendarios de escritorio
+            personalizados: recuerdos físicos pensados para celebrar su personalidad,
+            sus días favoritos y la manera en que acompañaron tu vida.
           </p>
           <p className="mt-5 text-lg leading-8 text-[#5f6470]">
             No se trata de olvidar ni de quedarse en la tristeza. Se trata de mirar

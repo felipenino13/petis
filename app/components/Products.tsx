@@ -1,30 +1,25 @@
 import Image from "next/image";
 
-const products = [
+const calendarDetails = [
   {
-    title: "Calendarios personalizados",
-    text: "Doce meses con fotos, fechas y detalles que hacen única su historia.",
+    title: "Diseño personalizado",
+    text: "Creamos una portada y páginas con las fotos de tu mascota y una estética cuidada.",
     accent: "bg-[#ffc62a]",
   },
   {
-    title: "Retratos ilustrados",
-    text: "Ilustraciones cálidas para capturar su expresión, su energía y su presencia.",
+    title: "Formato de escritorio",
+    text: "Un objeto físico para acompañar tu espacio y mantener sus recuerdos visibles.",
     accent: "bg-[#56a7df]",
   },
   {
-    title: "Álbumes de recuerdos",
-    text: "Una colección cuidada de momentos, frases y pequeñas escenas compartidas.",
+    title: "Doce meses de memoria",
+    text: "Cada mes puede guardar una foto, una fecha o un momento que quieras celebrar.",
     accent: "bg-[#ef5366]",
   },
   {
-    title: "Cartas conmemorativas",
-    text: "Mensajes escritos con sensibilidad para honrar lo vivido sin exagerar la nostalgia.",
+    title: "Hecho con sensibilidad",
+    text: "Pensado para sentirse cálido, cercano y bonito, sin cargar la experiencia de tristeza.",
     accent: "bg-[#c98d6c]",
-  },
-  {
-    title: "Kits de memoria",
-    text: "Piezas físicas y digitales para guardar fotos, nombres, fechas y símbolos importantes.",
-    accent: "bg-[#183e5b]",
   },
 ];
 
@@ -32,17 +27,17 @@ const calendarPhotos = [
   {
     src: "/calendario-escritorio-01.webp",
     alt: "Calendario de escritorio Petis con foto de mascotas en portada",
-    label: "Calendario de escritorio",
+    label: "Portada personalizada",
   },
   {
-    src: "/calendario-pared-01.webp",
-    alt: "Calendario de pared Petis con foto de perro y gato",
-    label: "Calendario de pared",
+    src: "/calendario-escritorio-02.webp",
+    alt: "Calendario de escritorio Petis personalizado para mascotas",
+    label: "Formato de escritorio",
   },
   {
     src: "/calendario-escritorio-03.webp",
-    alt: "Detalle de calendario de escritorio personalizado para mascotas",
-    label: "Detalles personalizados",
+    alt: "Detalle del calendario de escritorio Petis para mascotas",
+    label: "Detalles del producto",
   },
 ];
 
@@ -53,15 +48,15 @@ export function Products() {
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#ef5366]">
-              Productos reales
+              Producto disponible
             </p>
             <h2 className="mt-4 text-4xl font-semibold leading-tight text-[#183e5b] sm:text-5xl">
-              Calendarios diseñados para que su historia viva todo el año.
+              Calendario de escritorio personalizado para mascotas.
             </h2>
           </div>
           <p className="max-w-md text-lg leading-8 text-[#68707b]">
-            Empezamos con piezas físicas cuidadas: calendarios de escritorio y pared
-            que convierten sus fotos en un objeto cercano, útil y emocional.
+            Por ahora Petis se enfoca en este primer producto: un calendario físico
+            para celebrar la historia de tu mascota durante todo el año.
           </p>
         </div>
 
@@ -95,23 +90,23 @@ export function Products() {
           <div className="relative min-h-[420px] overflow-hidden rounded-lg shadow-[0_24px_70px_rgba(39,56,74,0.12)]">
             <Image
               src="/calendario-escritorio-04.webp"
-              alt="Calendario personalizado Petis con diseño de mascotas"
+              alt="Calendario de escritorio personalizado Petis con diseño de mascotas"
               fill
               sizes="(max-width: 1024px) 100vw, 38vw"
               className="object-cover"
             />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
-            {products.map((product) => (
+            {calendarDetails.map((detail) => (
               <article
-                key={product.title}
+                key={detail.title}
                 className="group rounded-lg border border-[#ead9c8] bg-[#fffaf3] p-5 shadow-[0_18px_45px_rgba(39,56,74,0.06)] transition hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(39,56,74,0.12)]"
               >
-                <div className={`mb-6 h-2 w-16 rounded-full ${product.accent}`} />
+                <div className={`mb-6 h-2 w-16 rounded-full ${detail.accent}`} />
                 <h3 className="text-lg font-semibold leading-6 text-[#183e5b]">
-                  {product.title}
+                  {detail.title}
                 </h3>
-                <p className="mt-3 text-sm leading-6 text-[#68707b]">{product.text}</p>
+                <p className="mt-3 text-sm leading-6 text-[#68707b]">{detail.text}</p>
               </article>
             ))}
           </div>
